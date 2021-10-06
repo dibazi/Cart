@@ -1,10 +1,9 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Profile') }}
+            {{ __('Cart item') }}
         </h2>
     </x-slot>
-    
     @if ($message = Session::get('success'))
         <div class="alert alert-success">
             <p>{{ $message }}</p>
@@ -22,13 +21,13 @@
     <div class="rounded-t mb-0 px-4 py-3 border-0">
       <div class="flex flex-wrap items-center">
         <div class="relative w-full px-4 max-w-full flex-grow flex-1">
-          <h3 class="font-semibold text-base text-blueGray-700">User details</h3>
+          <h3 class="font-semibold text-base text-blueGray-700">Cart</h3>
+        </div>
+        <div class="relative w-full px-4 max-w-full flex-grow flex-1 text-right">
+          <button onclick="location.href='/carts/create'" class="bg-indigo-500 text-white active:bg-indigo-600 text-xs font-bold uppercase px-3 py-1 rounded outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150" type="button">Create cart</button>
         </div>
         <div class="relative w-full px-4 max-w-full flex-grow flex-1 text-right">
           <button onclick="location.href='/products'" class="bg-emerald-500 text-white active:bg-indigo-600 text-xs font-bold uppercase px-3 py-1 rounded outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150" type="button">Product list</button>
-        </div>
-        <div class="relative w-full px-4 max-w-full flex-grow flex-1 text-right">
-          <button onclick="location.href='/items'" class="bg-indigo-500 text-white active:bg-indigo-600 text-xs font-bold uppercase px-3 py-1 rounded outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150" type="button">View cart</button>
         </div>
       </div>
     </div>
@@ -39,34 +38,44 @@
           <tr>
 
           <th class="px-6 bg-blueGray-50 text-blueGray-500 align-middle border border-solid border-blueGray-100 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left">
-                          User Id
+                          Product Id
                         </th>
            <th class="px-6 bg-blueGray-50 text-blueGray-500 align-middle border border-solid border-blueGray-100 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left">
-                          User name
+                          Product name
                         </th>
           <th class="px-6 bg-blueGray-50 text-blueGray-500 align-middle border border-solid border-blueGray-100 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left">
-                          Item quantity
+                          Product description
                         </th>
-
+          <th class="px-6 bg-blueGray-50 text-blueGray-500 align-middle border border-solid border-blueGray-100 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left">
+            Action
+         </th>
           </tr>
         </thead>
 
         <tbody>
-
+        @foreach($items as $item)
           <tr>
 
             <td class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 ">
-            {{ Auth::user()->id }}
+            {{ $item->id }}
             </td>
             <td class="border-t-0 px-6 align-center border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
-            {{ Auth::user()->name }}
+            {{ $item->product_name }}
             </td>
             <td class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
-              {{ Auth::user()->items->count() }}
+              {{ $item->description }}
             </td>
-
+             <td class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
+             <form action="{{ route('items.destroy',$item->id) }}" method="POST">    
+                    @csrf
+                    @method('DELETE')      
+                    <div class="relative w-full px-4 max-w-full flex-grow flex-1 text-right">
+                    <button class="bg-red-500 text-white active:bg-indigo-600 text-xs font-bold uppercase px-3 py-1 rounded outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150" type="submit">Remove</button>
+                </div>
+            </form>
+            </td>
           </tr>
-
+          @endforeach
 
         </tbody>
 

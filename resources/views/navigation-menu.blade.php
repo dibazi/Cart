@@ -13,7 +13,7 @@
                 <!-- Navigation Links -->
                 <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
                     <x-jet-nav-link href="{{ route('carts.index') }}" :active="request()->routeIs('carts.index')">
-                        {{ __('Carts') }}
+                        {{ __('Profile') }}
                     </x-jet-nav-link>
                 </div>
             </div>

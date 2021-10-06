@@ -2,6 +2,9 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CartController;
+use App\Http\Controllers\ProductController;
+use App\Http\Controllers\ItemtController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -28,4 +31,14 @@ Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
 Route::group(['middleware'=> 'auth:sanctum', 'verified'], function() {
     //route resource with all the function update, delete, create, read
     Route::resource('carts', CartController::class);
+} );
+
+Route::group(['middleware'=> 'auth:sanctum', 'verified'], function() {
+    //route resource with all the function update, delete, create, read
+    Route::resource('products', ProductController::class);
+} );
+
+Route::group(['middleware'=> 'auth:sanctum', 'verified'], function() {
+    //route resource with all the function update, delete, create, read
+    Route::resource('items', ItemtController::class);
 } );
